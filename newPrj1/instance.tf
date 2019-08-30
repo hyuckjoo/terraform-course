@@ -13,7 +13,7 @@ resource "aws_key_pair" "skcc-016-key" {
 }
 
 resource "aws_instance" "example" {
-  ami = "ami-0fd02cb7da42ee5e0"
+  ami = "${lookup(var.AMIS, var.AWS_REGION)}"
   instance_type = "t2.micro"
   key_name = "${aws_key_pair.skcc-016-key.key_name}"
 
@@ -21,10 +21,6 @@ resource "aws_instance" "example" {
     user = "ubuntu"
     private_key = "${file("skcc-016-key")}"
   }
-}
-
-provider "aws" {
-    region = "ap-northeast-2"
 }
 
 
